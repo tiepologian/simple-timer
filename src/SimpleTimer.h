@@ -47,6 +47,7 @@ public:
 			exit(1);
 		}
 		std::get<1>(_timers[timerName]) = std::chrono::system_clock::now();
+		_results[timerName] = std::chrono::duration_cast<simpletimer::micro>(std::get<1>(_timers[timerName]) - std::get<0>(_timers[timerName]));
 	}
 	template<typename T>
 	T getTime(std::string timerName) {
@@ -57,14 +58,24 @@ public:
 			std::cout << "Timer \"" << timerName << "\" not found" << std::endl;
 			exit(1);
 		}
-		T result = std::chrono::duration_cast<T>(std::get<1>(_timers[timerName]) - std::get<0>(_timers[timerName]));
+		T result = std::chrono::duration_cast<T>(_results[timerName]);
 		return result;
+	}
+	/*
+	 * Utility function - prints results for all timers (in milliseconds)
+	 */
+	void printAllResults() {
+		for(ResultMap::iterator it=_results.begin(); it!=_results.end(); ++it) {
+			std::cout << it->first << ": " << std::chrono::duration_cast<ms>(it->second).count() << "ms" << std::endl;
+		}
 	}
 private:
 	SimpleTimer() {}
 	SimpleTimer(const SimpleTimer& src);
 	SimpleTimer& operator=(const SimpleTimer& rhs);
 	std::map<std::string, std::pair<sysClock, sysClock>> _timers;
+	typedef std::map<std::string, simpletimer::micro> ResultMap;
+	ResultMap _results;
 #ifdef __linux__
 	std::mutex _mutex;
 #endif

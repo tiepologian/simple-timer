@@ -38,5 +38,9 @@ int main(int argc, char* argv[]) {
 	SimpleTimer::get().stop("Timer #2");
 	std::cout << "Timer #2: " << SimpleTimer::get().getTime<micro>("Timer #2") << " micro" << std::endl;
 
+	// Print times of all timers
+	std::cout << "\nAll results:" << std::endl;
+	SimpleTimer::get().printAllResults();
+
 	return 0;
 }
