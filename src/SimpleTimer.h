@@ -81,15 +81,15 @@ private:
 #endif
 }; /* SimpleTimer class */
 
-std::ostream &operator<<(std::ostream &os, const simpletimer::micro &obj) {
+inline std::ostream &operator<<(std::ostream &os, const simpletimer::micro &obj) {
 	return os << obj.count();
 }
 
-std::ostream &operator<<(std::ostream &os, const simpletimer::ms &obj) {
+inline std::ostream &operator<<(std::ostream &os, const simpletimer::ms &obj) {
 	return os << obj.count();
 }
 
-std::ostream &operator<<(std::ostream &os, const simpletimer::sec &obj) {
+inline std::ostream &operator<<(std::ostream &os, const simpletimer::sec &obj) {
 	return os << obj.count();
 }
 
